@@ -1,44 +1,7 @@
 <template>
   <div class="container">
     <el-row class="strategy_header" type="flex">
-      <el-row class="strategy_recommended">
-        <el-row class="strategy_nav">
-          <el-row type="flex" justify="space-between">
-            <span>海外冬季目的地精选</span>
-            <i class="el-icon-arrow-right"></i>
-          </el-row>
-          <el-row type="flex" justify="space-between">
-            <span>国内冬季目的地推荐</span>
-            <i class="el-icon-arrow-right"></i>
-          </el-row>
-          <el-row type="flex" justify="space-between">
-            <span>奔向海岛</span>
-            <i class="el-icon-arrow-right"></i>
-          </el-row>
-          <el-row type="flex" justify="space-between">
-            <span>主题推荐</span>
-            <i class="el-icon-arrow-right"></i>
-          </el-row>
-        </el-row>
-
-        <el-row class="strategy_search" type="flex" justify="space-between">
-          <span></span>
-          <el-input placeholder="请输入想去的地方,如香港" class="input-with-select"></el-input>
-        </el-row>
-        <el-row class="strategy_app" type="flex" justify="space-around">
-          <el-row class="strategy_app_logo">
-            <img src="http://images.mafengwo.net/images/app/m/logo_gonglve_v6.png?v=20150825" alt />
-          </el-row>
-          <el-row class="strategy_app_download">
-            <h5>马蜂窝自由行APP下载</h5>
-            <p>iPhone版 | Android版 | iPad版</p>
-            <!-- <img
-              src="https://p3-q.mafengwo.net/s12/M00/17/80/wKgED1vb_fqAeZq0AAAxwHmnAuc675.png"
-              alt
-            />-->
-          </el-row>
-        </el-row>
-      </el-row>
+      <PostNavAside />
       <el-row class="strategy_carousel">
         <el-carousel trigger="click" height="340px">
           <el-carousel-item v-for="item in img" :key="item">
@@ -199,6 +162,7 @@
 </template>
 
 <script>
+import PostNavAside from "@/components/post/postNavAside.vue";
 export default {
   data() {
     return {
@@ -210,6 +174,9 @@ export default {
         "https://n3-q.mafengwo.net/s13/M00/03/30/wKgEaVyu94SAIqDcAAheevdYPB4887.png"
       ]
     };
+  },
+  components: {
+    PostNavAside
   },
   methods: {}
 };
@@ -225,74 +192,7 @@ export default {
   .strategy_header {
     margin-top: 15px;
     height: 350px;
-    .strategy_recommended {
-      width: 260px;
-      //   border: 1px solid #000;
-      .strategy_nav {
-        color: #666;
-        box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.1);
-        border: 1px solid #ddd;
-        > div {
-          padding: 15px;
-          border-bottom: 1px solid #ddd;
-        }
-        span {
-          font-size: 12px;
-        }
-        i {
-          font-size: 12px;
-          color: #666;
-        }
-      }
-      .strategy_search {
-        // width: 100%;
-        // position: relative;
-        border: 2px solid #ffa800;
-        margin-top: 10px;
-        .input-with-select {
-          width: 206px;
-          flex: 1;
-          font-size: 12px;
-          color: #000;
-          .el-input__inner {
-            border: 1px solid #fff !important;
-          }
-        }
-        span {
-          float: left;
-          width: 29px;
-          height: 27px;
-          display: block;
-          background: url("http://images.mafengwo.net/images/gonglve/new-gl-icon6.png") -20px -60px
-            no-repeat;
-          margin-top: 8px;
-          margin-left: 6px;
-        }
-      }
-      .strategy_app {
-        margin-top: 10px;
-        height: 65px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        .strategy_app_logo {
-          img {
-            width: 50px;
-            height: 50px;
-          }
-        }
-        .strategy_app_download {
-          h5 {
-            font-size: 16px;
-            color: #ffa800;
-            margin-top: 3px;
-          }
-          p {
-            font-size: 12px;
-            margin-top: 5px;
-            color: #999;
-          }
-        }
-      }
-    }
+    
     .strategy_carousel {
       flex: 1;
       margin-left: 30px;
@@ -323,7 +223,7 @@ export default {
           width: 33.333%;
           font-size: 14px;
           text-align: center;
-          margin: 0 -1px;
+          margin: 0 -2px;
           color: #666;
           i {
           }
@@ -382,9 +282,15 @@ export default {
         border-top: 1px solid #eee;
         // background: #000;
         padding: 20px 10px 30px 10px;
+        cursor: pointer;
+        &:hover {
+          background: #eee;
+        }
+        &:hover .Spend_Holidays > i {
+          color: #ff9d00;
+        }
         li {
           .Published_strategy_header {
-            
             .come_from {
               font-size: 12px;
               > i {
