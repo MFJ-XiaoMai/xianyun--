@@ -2,7 +2,7 @@
     <div class="container">
         <div class="main">
             <HOTELCHECKPRICE @setHotelInfo="getHotelInfo"/>
-            <HOTELMAP :data="scenic"/>
+            <HOTELMAP :data="scenic" :location="data"/>
         </div>
         
     </div>
