@@ -12,7 +12,6 @@
                             <a href="javascript:;"
                             v-for="(item,index) in data.scenic" 
                             :key="index"
-                            v-if="index"
                             >{{item.name}}</a>
                             <a href="javascript:;">
                                 <i class="el-icon-d-arrow-right"></i>
