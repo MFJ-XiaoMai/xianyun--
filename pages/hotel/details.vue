@@ -13,6 +13,7 @@
       <div>
         <DetailsComment />
       </div>
+
     </div>
   </div>
 </template>
@@ -26,7 +27,7 @@ import DetailsComment from "@/components/hotel/detailsComment.vue";
 export default {
   data(){
     return{
-      data:{}
+      data:[],
     }
   },
 
@@ -37,7 +38,22 @@ export default {
     DetailsComment
   },
   mounted(){
-    
+    this.$axios({
+      url: "/hotels",
+      method: "GET"
+      // data:{
+      //   id:this.$route.query.id,
+      // }
+    }).then(res => {
+      // console.log(res);
+      const { data } = res.data;
+      const id = this.$route.query.id;
+
+      const arr = data.filter(v => (v.id = id));
+      // console.log('1111',arr);
+      this.data = data;
+      console.log(this.data)
+    });
   }
 };
 </script>
