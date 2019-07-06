@@ -32,7 +32,7 @@
             </div>
             <div class="search-person">
                 <el-input
-                    placeholder="请输入内容"
+                    placeholder="人数未定"
                     @focus="querySearch"
                     v-model="person">
                     <i

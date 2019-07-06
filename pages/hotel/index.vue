@@ -3,6 +3,7 @@
         <div class="main">
             <HOTELCHECKPRICE @setHotelInfo="getHotelInfo"/>
             <HOTELMAP :data="scenic" :location="data"/>
+            <HOTELFLITER/>
         </div>
         
     </div>
@@ -11,7 +12,7 @@
 <script>
 import HOTELCHECKPRICE from "@/components/hotel/hotelcheckprice"
 import HOTELMAP from "@/components/hotel/hotelmap";
-
+import HOTELFLITER from "@/components/hotel/hotelfliter"
 export default {
     data(){
         return {
@@ -25,7 +26,8 @@ export default {
     },
     components:{
          HOTELMAP,
-         HOTELCHECKPRICE
+         HOTELCHECKPRICE,
+          HOTELFLITER
     },
     methods:{
         getHotelInfo(info){
