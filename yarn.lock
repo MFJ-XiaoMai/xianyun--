@@ -6064,8 +6064,8 @@ q@^1.1.2:
 
 qrcode@^1.3.4:
   version "1.3.4"
-  resolved "https://registry.npm.taobao.org/qrcode/download/qrcode-1.3.4.tgz#1e5358050a5184cca3d0b7ed7f76769a8d3557d1"
-  integrity sha1-HlNYBQpRhMyj0Lftf3Z2mo01V9E=
+  resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.3.4.tgz#1e5358050a5184cca3d0b7ed7f76769a8d3557d1"
+  integrity sha512-wCfIu6sA0bXisSDT/ehgSC1v1uRoW8xGu5y18zyOV8D1J/ciz3xC+48LkLupqk0uqyBKxKq3eImuVgfrzFAdrg==
   dependencies:
     dijkstrajs "^1.0.1"
     isarray "^2.0.1"
