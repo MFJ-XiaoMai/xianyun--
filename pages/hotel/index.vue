@@ -93,7 +93,15 @@ export default {
         }
     },
     mounted(){
-       
+       this.$axios({
+           url:"/hotels",
+              method:"GET",
+              params:{
+                  city:74
+              }
+       }).then(res=>{
+           this.data=res.data.data
+       })
     }
 }
 </script>
