@@ -7,7 +7,9 @@
                         <span >区域：</span>
                     </el-col>
                     <el-col :span="20">
-                        <div :class="{unfold:flag,}">
+                        <div 
+                        :class="{unfold:flag,}"
+                        >
                             <a href="#">全部</a>
                             <a href="javascript:;"
                             v-for="(item,index) in data.scenic" 
@@ -101,8 +103,13 @@
                     </div>
                 </el-row>
             </div>
-            <div class="map" >
-                <div  id="container">
+            <div class="map" 
+                v-loading="loading"
+                element-loading-text="拼命加载中"
+                element-loading-spinner="el-icon-loading"
+                element-loading-background="rgba(225, 225, 225, .8)" >
+                <div 
+                 id="container">
 
                 </div>
             </div>
@@ -118,6 +125,7 @@ export default {
             // show:false,
             top:false,
             bottom:true,
+            loading: false,
         }
     },
     props:{
@@ -135,33 +143,44 @@ export default {
             this.flag=!this.flag;
             this.top=!this.top;
             this.bottom=!this.bottom;
-        }
+        },
+
     },
     watch:{
         data(){
-            if(this.data){
-                this.flag=true
+            this.loading=true
+            if(this.data!=={}){
+                this.flag=true;  
             }
-            if(this.data||this.location) return;
-        var map = new AMap.Map('container',{
-            zoom:11,//放大级别
-            center: [this.data.location.longitude, this.data.location.latitude],//中心点坐标
-            viewMode:'3D'//使用3D视图
-        });
-        var toolbar = new AMap.ToolBar();
-        map.addControl(toolbar);
-        let arr=[]
-        const location=this.location.map((e,index)=>{
-            const marker=new AMap.Marker({
-                // 自定义图片内容
-                // content: `<div class="marker-route ">${index}</div>`,
-                position: new AMap.LngLat(e.location.longitude,e.location.latitude ),   // 经纬度对象
-                title: `${e.address}`
-            })
-          return  arr.push(marker)
-        })
-            // 将创建的点标记添加到已有的地图实例：
-            map.add(arr);
+            if(!(this.data||this.location)) return;
+           setTimeout(()=>{
+            var map = new AMap.Map('container',{
+                    zoom:11,//放大级别
+                    center: [this.data.location.longitude, this.data.location.latitude],//中心点坐标
+                    viewMode:'3D'//使用3D视图
+                });
+                var toolbar = new AMap.ToolBar();
+                map.addControl(toolbar);
+                let arr=[]
+                const location=this.location.map((e,index)=>{
+                    const marker=new AMap.Marker({
+                        // 自定义图片内容
+                        // content: `<div class="marker-route ">${index}</div>`,
+                        position: new AMap.LngLat(e.location.longitude,e.location.latitude ),   // 经纬度对象
+                        title: `${e.address}`
+                    })
+                    return  arr.push(marker)
+                })
+                    // 将创建的点标记添加到已有的地图实例：
+                    map.add(arr);
+                    
+           },1000) 
+       
+    },
+    loading(){
+        setTimeout(()=>{
+                this.loading=false
+            },1000)
     }
         
     },
@@ -190,8 +209,7 @@ export default {
                 
                 .unfold{
                     height:60px;
-                    overflow: hidden;
-                   
+                    overflow: hidden; 
                 }
                 // .showHeight{
                 //      height:60px;

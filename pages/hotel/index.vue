@@ -3,12 +3,25 @@
         <div class="main">
             <HOTELCHECKPRICE @setHotelInfo="getHotelInfo"/>
             <HOTELMAP :data="scenic" :location="data"/>
-            <HOTELFLITER/>
-            <div>
+            <HOTELFLITER @fliterdata="getdatalist" :data="newdata"/>
+            <div
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(225, 225, 225, .8)">
                 <HOTELLIST 
-                v-for="(item,index) in data" 
+                v-for="(item,index) in datalist" 
                 :key="index"
                 :data="item"/>
+                 <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="pageIndex"
+                    :page-sizes="[4, 6, 8,10 ]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="data.length">
+                </el-pagination>
             </div>
             
         </div>
@@ -27,9 +40,14 @@ export default {
             data:[
                
             ],
+            newdata:[],
+            datalist:[],
             scenic:{
                 scenic:[]
-            }
+            },
+            loading:false,
+            pageIndex:1,
+            pageSize:4,
         }
     },
     components:{
@@ -40,9 +58,38 @@ export default {
     },
     methods:{
         getHotelInfo(info){
-            this.data=info
+            this.data=info;
+            this.newdata=[...info]
             this.scenic=this.data[0]
             console.log(this.data)
+        },
+        handleSizeChange(val) {
+        this.pageSize=val;
+        this.getdatalist()
+      },
+      handleCurrentChange(val) {
+       this.pageIndex=val
+       this.getdatalist()
+      },
+    //   得到页面展示数据
+        getdatalist(val){
+            if(val){
+                this.data=val;
+                this.newdata=[...val]
+            }
+            this.datalist=this.data.slice((this.pageIndex-1)*this.pageSize,this.pageIndex*this.pageSize)
+        }
+    },
+    watch:{
+        loading(){
+            setTimeout(()=>{
+                this.loading=false
+            },1000)
+             this.getdatalist()
+        },
+        data(){
+            this.loading=true;
+           
         }
     },
     mounted(){
