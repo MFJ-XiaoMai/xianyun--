@@ -7,14 +7,15 @@
                         <span >区域：</span>
                     </el-col>
                     <el-col :span="20">
-                        <div :class="{unfold:flag}">
+                        <div :class="{unfold:flag,}">
                             <a href="#">全部</a>
                             <a href="javascript:;"
                             v-for="(item,index) in data.scenic" 
                             :key="index"
                             >{{item.name}}</a>
                         </div>
-                        <a href="javascript:;" @click="handerunfold">
+                        <a href="javascript:;" @click="handerunfold" 
+                        :class="{rotatetop:top,rotatebottom:bottom}">
                             <i class="el-icon-d-arrow-right" ></i>
                             <span>等43个区域</span>
                         </a>
@@ -113,7 +114,10 @@
 export default {
     data(){
         return {
-            flag:true,
+            flag:false,
+            // show:false,
+            top:false,
+            bottom:true,
         }
     },
     props:{
@@ -128,11 +132,17 @@ export default {
     },
     methods:{
         handerunfold(){
-            this.flag=!this.flag
+            this.flag=!this.flag;
+            this.top=!this.top;
+            this.bottom=!this.bottom;
         }
     },
     watch:{
         data(){
+            if(this.data){
+                this.flag=true
+            }
+            if(this.data||this.location) return;
         var map = new AMap.Map('container',{
             zoom:11,//放大级别
             center: [this.data.location.longitude, this.data.location.latitude],//中心点坐标
@@ -177,16 +187,29 @@ export default {
            width:580px;
            
             .content-area{
-              
+                
                 .unfold{
-                    overflow: hidden;
                     height:60px;
+                    overflow: hidden;
+                   
+                }
+                // .showHeight{
+                //      height:60px;
+                //     overflow: hidden;
+                // }
+                a{
+                    margin-right:20px;
+                    color:#666; 
+                }
+                .rotatebottom{
+                     margin-right:20px;
+                    color:#666;
                     i{
                         transform: rotate(90deg);
                         color: #f90; 
                     }
                 }
-                a{
+                .rotatetop{
                     margin-right:20px;
                     color:#666;
                     i{
