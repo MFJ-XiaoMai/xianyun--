@@ -165,7 +165,6 @@ export default {
          },
         //  固定选择城市
        async handledefault(){
-           console.log(this.city)
            if(this.city) return 
              const arr= await this.getquerysearchcity(this.city)
              if(arr.length>1){
@@ -181,7 +180,6 @@ export default {
           }).then(res=>{
               const {data}=res.data
             this.$emit("setHotelInfo",data)
-             
           }) 
         },
         //  获取城市数据

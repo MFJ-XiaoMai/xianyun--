@@ -20,7 +20,8 @@
                 <div class="hotel-option">
                     <el-select 
                     size="mini"
-                     class="select"
+                    class="select"
+                    @change="handlelevel"
                     v-model="hotellevel" 
                     placeholder="请选择">
                         <el-option
@@ -40,6 +41,7 @@
                 <div class="hotel-option">
                     <el-select 
                      size="mini"
+                      @change="handletype"
                       class="select"
                     v-model="hoteltype" 
                     placeholder="请选择">
@@ -60,6 +62,7 @@
                 <div class="hotel-option">
                     <el-select
                     size="mini"
+                     @change="handleasset"
                     class="select"
                     v-model="hotelasset" 
                      placeholder="请选择">
@@ -81,6 +84,7 @@
                     <el-select 
                     v-model="hotelbrand"
                      size="mini"
+                      @change="handlebrand"
                      class="select"
                      placeholder="请选择">
                         <el-option
@@ -112,6 +116,67 @@ export default {
             assets: [],
             brands: [],
             radio:1,
+        }
+    },
+    props:{
+        data:{
+            type:Array,
+            default:[]
+        }
+    },
+    methods:{
+        // 筛选等级
+        handlelevel(){
+            this.$axios({
+                url:"/hotels",
+                method:"GET",
+                params:{
+                    hotellevel:this.hotellevel
+                }
+            }).then(res=>{
+                this.$emit("fliterdata",res.data.data)
+            })
+        },
+        // 筛选类型
+        handletype(){
+             this.$axios({
+                url:"/hotels",
+                method:"GET",
+                params:{
+                    hoteltype:this.hoteltype
+                }
+            }).then(res=>{
+                this.$emit("fliterdata",res.data.data)
+            })
+        },
+        // 筛选设施
+         handleasset(){
+              this.$axios({
+                url:"/hotels",
+                method:"GET",
+                params:{
+                    hotelasset:this.hotelasset
+                }
+            }).then(res=>{
+                this.$emit("fliterdata",res.data.data)
+            })
+        },
+        // 筛选品牌
+         handlebrand(){
+              this.$axios({
+                url:"/hotels",
+                method:"GET",
+                params:{
+                    hotelbrand:this.hotelbrand
+                }
+            }).then(res=>{
+                this.$emit("fliterdata",res.data.data)
+            })
+        },
+    },
+    watch:{
+        price(){
+
         }
     },
    mounted(){

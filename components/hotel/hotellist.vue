@@ -1,5 +1,6 @@
 <template>
-    <div class="details">
+    <div class="details"
+    >
         <el-row type="flex" justify="space-between" >
             <el-col :span="7">
                 <a href="javascript:;" @click="handletoDetails">
@@ -41,7 +42,7 @@
                 </el-row>
             </el-col>
             <el-col class="hotel-link" :span="5" >
-                    <a href="" 
+                    <a href="javascript:;" 
                     v-for="(item,index) in data.products" 
                     :key="index"
                      >
@@ -65,7 +66,9 @@
 export default {
     data(){
         return {
-            star:[]
+            star:[],
+            active:[],
+            loading:false,
         }
     },
     props:{
@@ -87,12 +90,10 @@ export default {
         }
     },
     mounted(){
-        console.log(this.data.hotellevel)
         if(this.data.hotellevel==null) return ;
-       for(var i=0;i<this.data.hotellevel.level||0;i++){
-           this.star.push(i)
-       }
-       console.log(this.star)
+        for(var i=0;i<this.data.hotellevel.level||0;i++){
+            this.star.push(i)
+        }
     }
 }
 </script>
