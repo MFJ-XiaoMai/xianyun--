@@ -14,16 +14,14 @@
     <el-row class="strategy_middle" type="flex" justify="space-between">
       <el-row class="Travel_strategy_navigation">
         <h5>旅游攻略导航</h5>
-        <el-row class="area_theme">
+        <el-row class="area_theme" type="flex">
           <span>
             国内
             <i class="el-icon-caret-bottom"></i>
-            <span>|</span>
           </span>
           <span>
             国外
             <i class="el-icon-caret-bottom"></i>
-            <span>|</span>
           </span>
           <span>
             主题
@@ -43,126 +41,52 @@
               </span>
             </li>
             <li>
-              <span>2</span>东京
+              <span>2</span>
+              <a href="#">东京</a>
             </li>
             <li>
-              <span>3</span>京都
+              <span>3</span>
+              <a href="#">京都</a>
             </li>
             <li>
-              <span>4</span>日本
+              <span>4</span>
+              <a href="#">日本</a>
             </li>
             <li>
-              <span>5</span>西安
+              <span>5</span>
+              <a href="#">西安</a>
             </li>
             <li>
-              <span>6</span>成都
+              <span>6</span>
+              <a href="#">成都</a>
             </li>
             <li>
-              <span>7</span>北京
+              <span>7</span>
+              <a href="#">北京</a>
             </li>
             <li>
-              <span>8</span>重庆
+              <span>8</span>
+              <a href="#">重庆</a>
             </li>
             <li>
-              <span>9</span>台湾
+              <span>9</span>
+              <a href="#">台湾</a>
             </li>
             <li>
-              <span>10</span>青岛
+              <span>10</span>
+              <a href="#">青岛</a>
             </li>
           </ul>
         </el-row>
       </el-row>
-      <el-row class="Travel_strategy_recommended">
-        <h5>推荐攻略</h5>
-        <el-row class="Published_strategy">
-          <ul>
-            <li>
-              <el-row class="Published_strategy_header" type="flex" justify="space-between">
-                <el-row class="come_from">
-                  <i class="el-icon-position"></i>
-                  <span>
-                    来自
-                    <i>自由行攻略</i>
-                  </span>
-                </el-row>
-                <el-row class="number_experience">
-                  <span>
-                    <span>0</span>
-                    蜂蜂体验过
-                    <i class="el-icon-shopping-cart-2"></i>
-                  </span>
-                </el-row>
-              </el-row>
-              <el-row class="Spend_Holidays">
-                <i>度假的正确打开方式——吃泡三亚</i>
-                <p>三亚在中国海南岛的最南端，享有“东方夏威夷”的美誉。来到这里，泡酒店、吃海鲜才是正确的打开方式哟~</p>
-              </el-row>
-              <el-row class="Holidays_pic">
-                <img
-                  src="https://b1-q.mafengwo.net/s12/M00/B2/13/wKgED1wCyCSAL0T1AAJgo-aF1Wo64.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <img
-                  src="https://n2-q.mafengwo.net/s11/M00/D9/41/wKgBEFthUr6ADt6oABOtLGDuZ4M93.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <img
-                  src="https://p1-q.mafengwo.net/s11/M00/05/BA/wKgBEFtmyuCAf6TOAAJqyo4wFT898.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <span>614881浏览</span>
-              </el-row>
-            </li>
-          </ul>
-        </el-row>
-        <el-row class="Published_strategy">
-          <ul>
-            <li>
-              <el-row class="Published_strategy_header" type="flex" justify="space-between">
-                <el-row class="come_from">
-                  <i class="el-icon-position"></i>
-                  <span>
-                    来自
-                    <i>自由行攻略</i>
-                  </span>
-                </el-row>
-                <el-row class="number_experience">
-                  <span>
-                    <span>0</span>
-                    蜂蜂体验过
-                    <i class="el-icon-shopping-cart-2"></i>
-                  </span>
-                </el-row>
-              </el-row>
-              <el-row class="Spend_Holidays">
-                <i>度假的正确打开方式——吃泡三亚</i>
-                <p>三亚在中国海南岛的最南端，享有“东方夏威夷”的美誉。来到这里，泡酒店、吃海鲜才是正确的打开方式哟~</p>
-              </el-row>
-              <el-row class="Holidays_pic">
-                <img
-                  src="https://b1-q.mafengwo.net/s12/M00/B2/13/wKgED1wCyCSAL0T1AAJgo-aF1Wo64.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <img
-                  src="https://n2-q.mafengwo.net/s11/M00/D9/41/wKgBEFthUr6ADt6oABOtLGDuZ4M93.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <img
-                  src="https://p1-q.mafengwo.net/s11/M00/05/BA/wKgBEFtmyuCAf6TOAAJqyo4wFT898.jpeg?imageMogr2%2Fthumbnail%2F%21220x130r%2Fgravity%2FCenter%2Fcrop%2F%21220x130%2Fquality%2F100"
-                  alt
-                />
-                <span>614881浏览</span>
-              </el-row>
-            </li>
-          </ul>
-        </el-row>
-      </el-row>
+      <PostRecommend />
     </el-row>
   </div>
 </template>
 
 <script>
 import PostNavAside from "@/components/post/postNavAside.vue";
+import PostRecommend from "@/components/post/postRecommend.vue";
 export default {
   data() {
     return {
@@ -176,7 +100,8 @@ export default {
     };
   },
   components: {
-    PostNavAside
+    PostNavAside,
+    PostRecommend
   },
   methods: {}
 };
@@ -189,10 +114,11 @@ export default {
   li {
     list-style: none;
   }
+
   .strategy_header {
     margin-top: 15px;
     height: 350px;
-    
+
     .strategy_carousel {
       flex: 1;
       margin-left: 30px;
@@ -203,10 +129,10 @@ export default {
     }
   }
   .strategy_middle {
-    margin-top: 15px;
+    margin-top: 10px;
 
     .Travel_strategy_navigation {
-      width: 160px;
+      width: 170px;
       h5 {
         font-size: 16px;
         color: #333;
@@ -220,7 +146,7 @@ export default {
         padding: 15px 0px;
         border-bottom: 1px solid #eee;
         > span {
-          width: 33.333%;
+          flex: 1;
           font-size: 14px;
           text-align: center;
           margin: 0 -2px;
@@ -235,6 +161,13 @@ export default {
             border-bottom: 1px solid #eee;
             padding: 15px 0;
             font-size: 16px;
+            a {
+              font-size: 14px;
+              &:hover {
+                color: #ff9d00;
+                text-decoration: underline #ff9d00;
+              }
+            }
             span {
               color: #ff9d00;
               font-size: 18px;
@@ -265,83 +198,6 @@ export default {
                 background: url(http://images.mafengwo.net/images/gonglve/new-gl-icon6.png) -20px -90px
                   no-repeat;
               }
-            }
-          }
-        }
-      }
-    }
-    .Travel_strategy_recommended {
-      h5 {
-        font-size: 18px;
-        color: #333;
-        height: 49px;
-        line-height: 48px;
-        font-weight: normal;
-      }
-      .Published_strategy {
-        border-top: 1px solid #eee;
-        // background: #000;
-        padding: 20px 10px 30px 10px;
-        cursor: pointer;
-        &:hover {
-          background: #eee;
-        }
-        &:hover .Spend_Holidays > i {
-          color: #ff9d00;
-        }
-        li {
-          .Published_strategy_header {
-            .come_from {
-              font-size: 12px;
-              > i {
-              }
-              span {
-                > i {
-                  color: orange;
-                  font-style: normal;
-                }
-              }
-            }
-            .number_experience {
-              border: 1px solid orange;
-              padding: 5px 10px;
-              font-size: 14px;
-              border-radius: 25px;
-              > span {
-                color: #333;
-                span {
-                  color: orange;
-                }
-                i {
-                  color: orange;
-                }
-              }
-            }
-          }
-
-          .Spend_Holidays {
-            i {
-              font-size: 18px;
-              font-style: normal;
-            }
-            p {
-              font-size: 14px;
-              color: #333;
-              margin-top: 15px;
-            }
-          }
-          .Holidays_pic {
-            margin-top: 15px;
-
-            img {
-              margin-right: 10px;
-            }
-            span {
-              line-height: 130px;
-              font-size: 12px;
-              color: #999;
-              float: right;
-              padding-left: 30px;
             }
           }
         }
