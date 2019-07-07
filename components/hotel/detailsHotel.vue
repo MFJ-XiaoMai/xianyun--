@@ -3,20 +3,21 @@
     <div class="hotel">
       <!-- 酒店的信息：酒店名、地址 -->
       <el-row class="hotelHeader">
-        <div class="crumbs" >
+        <div class="crumbs">
           <span>酒店</span> >
           <span>南京酒店</span> >
           <span>得月楼饭店</span>
         </div>
-        <el-row type="flex" class="hotelName" justify="flex-start" 
-        >
+        <el-row type="flex" class="hotelName" justify="flex-start">
           <h4>得月楼饭店</h4>
           <span>
+            <i class="iconfont iconhuangguan" 
+            v-for="(item,index) in remainingStar"
+            :key="index"></i>
+            <!-- <i class="iconfont iconhuangguan"></i>
             <i class="iconfont iconhuangguan"></i>
             <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>
+            <i class="iconfont iconhuangguan"></i>-->
           </span>
         </el-row>
         <p>de yue lou hotel</p>
@@ -116,8 +117,9 @@ export default {
       //     default:{}
       //   }
       // },
-
-      data:[
+      star: [1, 2, 3, 4, 5],
+      remainingStar: [],
+      data: [
         // id,
       ],
       tableData: [
@@ -140,23 +142,26 @@ export default {
     };
   },
 
-  mounted(){
+  mounted() {
     // 请求酒店详情页的数据
     this.$axios({
-      url:'/hotels',
-      method:"GET", 
+      url: "/hotels",
+      method: "GET"
       // data:{
       //   id:this.$route.query.id,
-      // }   
-    }).then( res=>{
-      console.log(res);
-      const {data} = res.data;
-      const id=this.$route.query.id
+      // }
+    }).then(res => {
+      // console.log(res);
+      const { data } = res.data;
+      const id = this.$route.query.id;
 
-      const arr = data.filter(v=>v.id=id)
+      const arr = data.filter(v => (v.id = id));
       // console.log('1111',arr);
-      this.data=data
-    })
+      this.data = data;
+      // console.log(this.data);
+      this.remainingStar = this.star.slice(0, Math.floor(this.data[1].stars));
+      console.log(this.remainingStar)
+    });
   }
 };
 </script>
@@ -191,14 +196,14 @@ export default {
       .list-item {
         .el-col {
           margin-bottom: 10px;
-          &:nth-child(2n){
+          &:nth-child(2n) {
             padding-left: 7px;
           }
         }
       }
     }
     .hotelPrice {
-     margin: 40px 0;
+      margin: 40px 0;
     }
   }
 }
