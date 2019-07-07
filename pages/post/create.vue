@@ -38,28 +38,45 @@
       </el-row>
     </el-form>
     <div class="create-right">
+<<<<<<< HEAD
       <span class="create-right-title">草稿箱（ {{form.id}} ）</span>
       <el-row v-for="(item, index) in caogao" :key="index">
         <span @click="handleChange(index)"  :v-model="index" class="caogao">{{item.title}}</span>
         <span class="iconfont el-icon-edit tubiao"></span>
         <p>2019-07-07</p>
+=======
+      <h3 class="create-right-title">草稿箱（ {{form.id}} ）</h3>
+      <el-row v-for="(item, index) in caogao" :key="index">
+        <span @click="handleChange(index)" :v-model="index" class="caogao">{{item.title}}</span>
+        <span class="iconfont el-icon-edit tubiao"></span><br />
+        <span >{{item.time}}</span>
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
       </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
       caogao: [],
       wenzhang: [],
+<<<<<<< HEAD
+=======
+      time:'',
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
       form: {
         title: "",
         textarea: "",
         city: "",
         id: "",
+<<<<<<< HEAD
         index:0
+=======
+        num: 0
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
       },
       rules: {
         city: [{ required: true, message: "请输入城市名", trigger: "blur" }],
@@ -73,6 +90,7 @@ export default {
             ["blockquote", "code-block"],
             ["link", "image"]
           ]
+<<<<<<< HEAD
         }
       }
     };
@@ -159,11 +177,35 @@ export default {
       }
       this.caogao.splice(this.index,1)
       localStorage.removeItem("posts-caogao")
-      this.form.id = this.caogao.length;
+=======
+        }
+      }
+    };
+  },
+
+  methods: {
+    handleChange(index) {
+      const localPost = JSON.parse(localStorage.getItem("posts-caogao"));
+      this.form.title = localPost[index].title;
+      this.content = localPost[index].content;
+      this.form.city = localPost[index].city;
+      this.form.num = index;
     },
-    handleCaoGao() {
+    onEditorBlur(editor) {
+      // console.log('editor blur!', editor)
+    },
+    onEditorFocus(editor) {
+      // console.log('editor focus!', editor)
+    },
+    onEditorReady(editor) {
+      // console.log('editor ready!', editor)
+    },
+    onEditorChange({ editor, html, text }) {
+      // console.log('editor change!', editor, html, text)
+      this.content = html;
+    },
+    handleFaBu() {
       const token = this.$store.state.user.userInfo.token;
-      console.log(token);
       if (!token) {
         this.$message.success("请先去登录!");
         return;
@@ -186,6 +228,81 @@ export default {
           valid = false;
         }
       });
+      if (rules.title.value && rules.city.value) {
+        this.wenzhang.unshift({
+          content: this.content,
+          city: this.form.city,
+          title: this.form.title
+        });
+        localStorage.setItem("posts", JSON.stringify(this.wenzhang));
+      }
+      const data = {
+        content: this.content,
+        city: this.form.city,
+        title: this.form.title
+      };
+      const {
+        user: { userInfo }
+      } = this.$store.state;
+      if (rules.title.value && rules.city.value) {
+        this.$axios({
+          url: "posts",
+          method: "POST",
+          data,
+          headers: {
+            Authorization: `Bearer ${userInfo.token || "NO TOKEN"}`
+          }
+        }).then(res => {
+          const { status, message } = res.data;
+          if (status == 0) {
+            this.$message.success(message);
+            this.$router.push("/post")
+          }
+          this.form.city = "";
+          this.form.title = "";
+          this.content = "";
+        });
+      }
+
+      const newcaogao = JSON.parse(localStorage.getItem("posts-caogao"));
+      console.log(newcaogao);
+      console.log(this.form.num);
+      newcaogao.splice(this.form.num, 1);
+      this.caogao = newcaogao;
+      localStorage.setItem("posts-caogao", JSON.stringify(this.caogao));
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
+      this.form.id = this.caogao.length;
+    },
+    handleCaoGao() {
+      const token = this.$store.state.user.userInfo.token;
+      console.log(token);
+      if (!token) {
+        this.$message.success("请先去登录!");
+        return;
+      }
+      const rules = {
+        title: {
+          value: this.form.title,
+          message: "请输入主题"
+        },
+        city: {
+          value: this.form.city,
+          message: "请输入出发城市"
+        }
+      };
+<<<<<<< HEAD
+=======
+      this.time=moment().format('LLL');  // 2019年7月7日下午3点16分
+
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
+      let valid = true;
+      Object.keys(rules).forEach(v => {
+        if (!valid) return;
+        if (!rules[v].value) {
+          this.$message.warning(rules[v].message);
+          valid = false;
+        }
+      });
       if (!valid) {
         return;
       }
@@ -193,17 +310,30 @@ export default {
         this.caogao.unshift({
           content: this.content,
           city: this.form.city,
+<<<<<<< HEAD
           title: this.form.title
         });
         localStorage.setItem("posts-caogao", JSON.stringify(this.caogao));
         this.form.id = this.caogao.length;
+=======
+          title: this.form.title,
+          time:this.time
+        });
+        localStorage.setItem("posts-caogao", JSON.stringify(this.caogao));
+        this.form.id = this.caogao.length;
+        
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
       }
     }
   },
   mounted() {
     this.caogao = JSON.parse(localStorage.getItem("posts-caogao") || `[]`);
     this.form.id = this.caogao.length;
+<<<<<<< HEAD
   }
+=======
+  },
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
 };
 </script>
 
@@ -273,6 +403,7 @@ export default {
   }
   .create-right {
     width: 200px;
+<<<<<<< HEAD
     border: 1px springgreen solid;
     color:orangered;
     padding-left: 50px;
@@ -281,6 +412,21 @@ export default {
       color:palegreen;
       /deep/ .tubiao{
         color: palegreen
+=======
+    border: 1px rgb(0, 17, 255) solid;
+    color: rgb(234, 0, 255);
+    overflow: auto;
+    height: 700px;
+    border-radius: 10px;
+    h3 {
+      padding-left: 50px;
+    }
+    .caogao {
+      cursor: pointer;
+      color: orange;
+      /deep/ .tubiao {
+        color: palegreen;
+>>>>>>> e0a952bb5d23c97e5f946d94c63d2c330bbf413d
       }
     }
   }
