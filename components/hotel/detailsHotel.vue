@@ -4,92 +4,45 @@
       <!-- 酒店的信息：酒店名、地址 -->
       <el-row class="hotelHeader">
         <div class="crumbs">
-          <span>酒店</span> >
-          <span>南京酒店</span> >
-          <span>得月楼饭店</span>
+          {{data.breadcrumb}}
         </div>
-        <el-row type="flex" class="hotelName" justify="flex-start">
-          <h4>得月楼饭店</h4>
-          <span>
-            <i class="iconfont iconhuangguan" 
-            v-for="(item,index) in remainingStar"
-            :key="index"></i>
-            <!-- <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>
-            <i class="iconfont iconhuangguan"></i>-->
+        <el-row type="flex" 
+        class="hotelName" 
+        justify="flex-start">
+          <h4>{{data.name}}</h4>
+          <span v-for="(item,index) in crown"
+          :key="index"
+          v-html="item" style="color:#f90">
           </span>
         </el-row>
-        <p>de yue lou hotel</p>
+        <p>{{data.alias}}</p>
         <div class="hotelAddress">
           <i class="iconfont iconlocation"></i>
-          柘宁东路9号
+          {{data.address}}
         </div>
       </el-row>
       <!-- 酒店的图片 -->
       <el-row class="hotelPicture">
-        <el-col :span="16">
-          <div class="grid-content bg-purple">
+        <el-col :span="16" >
+          <div class="grid-content bg-purple" 
+          @click='handleBigPicture'
+          >
             <img
               height="360"
               width="640"
-              src="http://157.122.54.189:9093/images/hotel-pics/1.jpeg"
+              :src="`http://157.122.54.189:9093/images/hotel-pics/${this.num}.jpeg`"
               alt="得月楼饭店"
             />
           </div>
         </el-col>
         <el-col :span="8">
           <el-row class="list-item">
-            <el-col :span="12">
-              <a href="javascript:void(0)">
+            <el-col :span="12" v-for='(item,index) in src_url'
+            :key='index' >
+              <a href="javascript:void(0)" @click='handleSmallPicture(index)'>
                 <img
                   width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/1.jpeg"
-                  alt="得月楼饭店"
-                />
-              </a>
-            </el-col>
-            <el-col :span="12">
-              <a href="javascript:void(0)">
-                <img
-                  width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/2.jpeg"
-                  alt="得月楼饭店"
-                />
-              </a>
-            </el-col>
-            <el-col :span="12">
-              <a href="javascript:void(0)">
-                <img
-                  width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/3.jpeg"
-                  alt="得月楼饭店"
-                />
-              </a>
-            </el-col>
-            <el-col :span="12">
-              <a href="javascript:void(0)">
-                <img
-                  width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/4.jpeg"
-                  alt="得月楼饭店"
-                />
-              </a>
-            </el-col>
-            <el-col :span="12">
-              <a href="javascript:void(0)">
-                <img
-                  width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/5.jpeg"
-                  alt="得月楼饭店"
-                />
-              </a>
-            </el-col>
-            <el-col :span="12">
-              <a href="javascript:void(0)">
-                <img
-                  width="160"
-                  src="http://157.122.54.189:9093/images/hotel-pics/6.jpeg"
+                  :src="`http://157.122.54.189:9093/images/hotel-pics/${item.url}`"
                   alt="得月楼饭店"
                 />
               </a>
@@ -98,10 +51,24 @@
         </el-col>
       </el-row>
       <!-- 酒店的价格 -->
-      <el-table :data="tableData" style="width: 100%" class="hotelPrice">
-        <el-table-column prop="date" label="价格来源" width="420" style="color:orange"></el-table-column>
-        <el-table-column prop="name" label="低价房型" width="420"></el-table-column>
-        <el-table-column prop="address" label="最低价格/每晚"></el-table-column>
+      <el-table :data="data.products" style="width: 100%" class="hotelPrice">
+        <el-table-column label="价格来源" width="420" >
+          <el-row slot-scope="scope">
+              <span style="margin-left: 10px" >{{scope.row.name }}</span>
+          </el-row>
+        </el-table-column>
+
+        <el-table-column label="低价房型" width="420">
+          <template slot-scope="scope">
+              <p>{{ scope.row.bestType }}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="最低价格/每晚" class='floorPrice'>
+          <template slot-scope="scope">
+            <span style="color: #f90;">￥ {{scope.row.price }}</span> 起 
+            <i class="el-icon-arrow-right height-light" style="color: #f90;"></i>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -109,60 +76,58 @@
 
 <script>
 export default {
+  props:{
+    data:{
+        type:Object,
+        default:{}
+    }
+  },
   data() {
-    return {
-      // props:{
-      //   data:{
-      //     typr:Object,
-      //     default:{}
-      //   }
-      // },
-      star: [1, 2, 3, 4, 5],
-      remainingStar: [],
-      data: [
-        // id,
+    return { 
+      src_url:[
+        {url:"1.jpeg"},
+        {url:"2.jpeg"},
+        {url:"3.jpeg"},
+        {url:"4.jpeg"},
+        {url:"5.jpeg"},
+        {url:"6.jpeg"}, 
       ],
-      tableData: [
-        {
-          date: "携程",
-          name: "高级大床房A",
-          address: "99"
-        },
-        {
-          date: "艺龙",
-          name: "高级大床房A",
-          address: "71"
-        },
-        {
-          date: "Hotels",
-          name: "高级大床房A",
-          address: "141"
-        }
-      ]
+      num:1,
+      smallPictureIndex:0,
+      arr:[], //存皇冠
     };
   },
 
-  mounted() {
-    // 请求酒店详情页的数据
-    this.$axios({
-      url: "/hotels",
-      method: "GET"
-      // data:{
-      //   id:this.$route.query.id,
-      // }
-    }).then(res => {
-      // console.log(res);
-      const { data } = res.data;
-      const id = this.$route.query.id;
+  //监听皇冠的等级
+  computed:{
+    // crown皇冠
+    crown(){
+      if(this.data.hotellevel){
+        const crownNums = this.data.hotellevel.level;
+        for(var i=0;i<crownNums;i++){
+          this.arr.push('<i class="iconfont iconhuangguan"></i>')
+        }
+        var newArr = this.arr.map(v=>{
+          return v
+        })
+        return newArr
+      }
+    }
+  },
 
-      const arr = data.filter(v => (v.id = id));
-      // console.log('1111',arr);
-      this.data = data;
-      // console.log(this.data);
-      this.remainingStar = this.star.slice(0, Math.floor(this.data[1].stars));
-      console.log(this.remainingStar)
-    });
-  }
+  methods:{
+    handleBigPicture(){
+      if(this.num>=1 && this.num<6){
+        this.num++
+      }else{
+        this.num = 1
+      }
+      
+    },
+    handleSmallPicture(index){
+      this.num = index+1;
+    }
+  },
 };
 </script>
 

@@ -6,9 +6,9 @@
       <!-- 6、路线规划 -->
       <div id="panel">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="风景" name="first" >
+          <el-tab-pane label="风景" name="first">
             <ul>
-              <li class="poi-list-item" >
+              <li class="poi-list-item">
                 <span class="name">夫子庙</span>
                 <span class="distance">32.11公里</span>
               </li>
@@ -52,9 +52,7 @@
           </el-tab-pane>
           <el-tab-pane label="交通" name="second">
             <ul>
-               <li class="poi-list-item" 
-              v-for="(item,index) in data.scenic"
-              :key='index'>
+              <li class="poi-list-item" v-for="(item,index) in data.scenic" :key="index">
                 <span class="name">{{item.name}}</span>
                 <!-- <span class="distance">32.11公里</span> -->
               </li>
@@ -90,10 +88,7 @@
         </el-col>
         <el-col :span="20" class="messageRight service">
           <!-- v-for="(item,index) in $store.state.hotel.hotelInfo" -->
-          <span
-            v-for="(item,index) in data.hotelassets"
-            :key="index"
-          >{{item.name}}</span>
+          <span v-for="(item,index) in data.hotelassets" :key="index">{{item.name}}</span>
         </el-col>
       </el-row>
       <el-row class="messageItem">
@@ -101,7 +96,7 @@
           <span>停车服务</span>
         </el-col>
         <el-col :span="20" class="messageRight">
-          <span>-</span>
+          <span> - </span>
         </el-col>
       </el-row>
       <el-row class="messageItem">
@@ -109,7 +104,7 @@
           <span>品牌信息</span>
         </el-col>
         <el-col :span="20" class="messageRight">
-          <span>-</span>
+          <span> - </span>
         </el-col>
       </el-row>
     </div>
@@ -118,10 +113,10 @@
 
 <script>
 export default {
-  props:{
-    data:{
-        type:Object,
-        default:{}
+  props: {
+    data: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -201,7 +196,6 @@ export default {
       jsapi.src = url;
       document.head.appendChild(jsapi);
       //1、异步加载 JS API(引入高德地图的js文件)
-
     }, 1000);
   }
 };
