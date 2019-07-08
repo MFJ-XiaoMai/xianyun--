@@ -38,28 +38,30 @@
       </el-row>
     </el-form>
     <div class="create-right">
-      <span class="create-right-title">草稿箱（ {{form.id}} ）</span>
+      <h3 class="create-right-title">草稿箱（ {{form.id}} ）</h3>
       <el-row v-for="(item, index) in caogao" :key="index">
-        <span @click="handleChange(index)"  :v-model="index" class="caogao">{{item.title}}</span>
-        <span class="iconfont el-icon-edit tubiao"></span>
-        <p>2019-07-07</p>
+        <span @click="handleChange(index)" :v-model="index" class="caogao">{{item.title}}</span>
+        <span class="iconfont el-icon-edit tubiao"></span><br />
+        <span >{{item.time}}</span>
       </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
       caogao: [],
       wenzhang: [],
+      time:'',
       form: {
         title: "",
         textarea: "",
         city: "",
         id: "",
-        index:0
+        num: 0
       },
       rules: {
         city: [{ required: true, message: "请输入城市名", trigger: "blur" }],
@@ -84,6 +86,7 @@ export default {
       this.form.title = localPost[index].title;
       this.content = localPost[index].content;
       this.form.city = localPost[index].city;
+      this.form.num = index;
     },
     onEditorBlur(editor) {
       // console.log('editor blur!', editor)
@@ -122,7 +125,7 @@ export default {
           valid = false;
         }
       });
-      if (rules.title.value&& rules.city.value) {
+      if (rules.title.value && rules.city.value) {
         this.wenzhang.unshift({
           content: this.content,
           city: this.form.city,
@@ -133,32 +136,37 @@ export default {
       const data = {
         content: this.content,
         city: this.form.city,
-        title: this.form.title,
-        destCode: this.destCode
+        title: this.form.title
       };
       const {
         user: { userInfo }
       } = this.$store.state;
-      if (rules.title.value&& rules.city.value) {
-      this.$axios({
-        url: "posts",
-        method: "POST",
-        data,
-        headers: {
-          Authorization: `Bearer ${userInfo.token || "NO TOKEN"}`
-        }
-      }).then(res => {
-        const { status, message } = res.data;
-        if (status == 0) {
-          this.$message.success(message);
-        }
-        this.form.city = "";
-        this.form.title = "";
-        this.content = "";
-      });
+      if (rules.title.value && rules.city.value) {
+        this.$axios({
+          url: "posts",
+          method: "POST",
+          data,
+          headers: {
+            Authorization: `Bearer ${userInfo.token || "NO TOKEN"}`
+          }
+        }).then(res => {
+          const { status, message } = res.data;
+          if (status == 0) {
+            this.$message.success(message);
+            this.$router.push("/post")
+          }
+          this.form.city = "";
+          this.form.title = "";
+          this.content = "";
+        });
       }
-      this.caogao.splice(this.index,1)
-      localStorage.removeItem("posts-caogao")
+
+      const newcaogao = JSON.parse(localStorage.getItem("posts-caogao"));
+      console.log(newcaogao);
+      console.log(this.form.num);
+      newcaogao.splice(this.form.num, 1);
+      this.caogao = newcaogao;
+      localStorage.setItem("posts-caogao", JSON.stringify(this.caogao));
       this.form.id = this.caogao.length;
     },
     handleCaoGao() {
@@ -178,6 +186,8 @@ export default {
           message: "请输入出发城市"
         }
       };
+      this.time=moment().format('LLL');  // 2019年7月7日下午3点16分
+
       let valid = true;
       Object.keys(rules).forEach(v => {
         if (!valid) return;
@@ -193,17 +203,19 @@ export default {
         this.caogao.unshift({
           content: this.content,
           city: this.form.city,
-          title: this.form.title
+          title: this.form.title,
+          time:this.time
         });
         localStorage.setItem("posts-caogao", JSON.stringify(this.caogao));
         this.form.id = this.caogao.length;
+        
       }
     }
   },
   mounted() {
     this.caogao = JSON.parse(localStorage.getItem("posts-caogao") || `[]`);
     this.form.id = this.caogao.length;
-  }
+  },
 };
 </script>
 
@@ -273,14 +285,19 @@ export default {
   }
   .create-right {
     width: 200px;
-    border: 1px springgreen solid;
-    color:orangered;
-    padding-left: 50px;
-    .caogao{
-      cursor:pointer;
-      color:palegreen;
-      /deep/ .tubiao{
-        color: palegreen
+    border: 1px rgb(0, 17, 255) solid;
+    color: rgb(234, 0, 255);
+    overflow: auto;
+    height: 700px;
+    border-radius: 10px;
+    h3 {
+      padding-left: 50px;
+    }
+    .caogao {
+      cursor: pointer;
+      color: orange;
+      /deep/ .tubiao {
+        color: palegreen;
       }
     }
   }
