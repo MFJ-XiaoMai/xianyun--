@@ -153,8 +153,6 @@ export default {
           }
         }
       }
-      .hotelAddress {
-      }
     }
     .hotelPicture {
       padding: 40px 0;
