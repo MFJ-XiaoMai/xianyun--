@@ -231,8 +231,7 @@ export default {
     margin-bottom: 40px;
     .messageItem {
       padding: 20px 10px;
-      .messageLeft {
-      }
+
       .messageRight {
         span {
           color: #666;
