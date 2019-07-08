@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-row>
-      <el-col :span="16">
+      <el-col :span="17">
         <div>
           <el-breadcrumb separator="/" class="mianbao">
             <el-breadcrumb-item :to="{ path: '/post' }">旅游攻略</el-breadcrumb-item>
@@ -10,18 +10,17 @@
             </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-        
+
         <div class="main" v-for="(item,index) in postdata" :key="index">
           <div>
-        <div >
-         <h1 class="contentTitle">{{item.title}}</h1>
-     
-       </div>   
-          <div>
-          <div class="content" v-html="item.content"></div>
-           </div>  
-           <Postcontrol />
-           </div>
+            <div>
+              <h1 class="contentTitle">{{item.title}}</h1>
+            </div>
+            <div>
+              <div class="content" v-html="item.content"></div>
+            </div>
+            <Postcontrol />
+          </div>
           <div class="cmd-wrapper">
             <div class="cmd-title">
               <h3>评论区</h3>
@@ -90,7 +89,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="7">
         <Paperright />
       </el-col>
     </el-row>
@@ -98,43 +97,31 @@
 </template>
 
 <script>
-
-
 import Paperright from "@/components/post/paperright";
-
-import Postcontrol from "@/components/post/postcontrol"
-
+import Postcontrol from "@/components/post/postcontrol";
 
 export default {
-      components:{
-   
-        Paperright,
-  
-        Postcontrol
-        
-    },
-    data(){
-         return {
-          postdata:{},
-          id:""
+  components: {
+    Paperright,
+    Postcontrol
+  },
+  data() {
+    return {
+      postdata: {},
+      id: ""
     };
   },
-  
 
   methods: {},
-  mounted(){
-    this.id=this.$route.query.id;
+  mounted() {
+    this.id = this.$route.query.id;
     this.$axios({
-      url: "/posts?id="+ this.id,
+      url: "/posts?id=" + this.id,
       method: "GET"
     }).then(res => {
-   
-   var{data} =res.data;
-   this.postdata= data;
-
-   
-
-       console.log(this.$route.query)
+      var { data } = res.data;
+      this.postdata = data;
+      console.log(this.$route.query);
     });
   }
 };
@@ -142,7 +129,7 @@ export default {
 
 <style scoped lang="less">
 .main {
-  margin-left: 280px;
+  // margin-left: 280px;
   margin-top: 20px;
 }
 .right {
@@ -152,7 +139,7 @@ export default {
 }
 
 .mianbao {
-  margin-left: 280px;
+  // margin-left: 280px;
   margin-top: 20px;
 }
 .cmt-list {
@@ -200,32 +187,28 @@ export default {
 }
 .el-icon-edit {
   color: red;
-
   font-size: 35px;
 }
 .el-icon-folder-add {
   color: red;
-
   font-size: 35px;
 }
 .el-icon-share {
   color: red;
-
   font-size: 35px;
 }
 .el-icon-circle-check {
   color: red;
-
   font-size: 35px;
 }
-    .contenttitle{
-        width:1000px;
-        margin: 0px auto;
-        padding-top:30px;
-        font-size:30px;
-    }
-    /deep/ img{
-      max-width:700px;
-    }
+.contenttitle {
+  width: 1000px;
+  margin: 0px auto;
+  padding-top: 30px;
+  font-size: 30px;
+}
+/deep/ img {
+  max-width: 700px;
+}
 </style>
 
