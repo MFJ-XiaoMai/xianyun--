@@ -60,7 +60,7 @@
 
         <!-- 评论 -->
         <div class="cmt-list">
-          <div class="cmt-item" v-for="(item,index) in commentList" :key="index">
+          <div class="cmt-item" v-for="(item,index) in cmtList" :key="index">
             <div class="cmt-info">
               <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
               地球发动机
@@ -84,7 +84,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageIndex"
-          :page-sizes="[5,10, 15, 20]"
+          :page-sizes="[2 ,4 , 6, 8]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
@@ -123,7 +123,9 @@ export default {
       //分页的数据
       pageIndex: 1,
       pageSize: 2,
-      total: 0
+      total: 0,
+      cmtList:[],
+
     };
   },
 
@@ -174,10 +176,18 @@ export default {
     //分页切换条数的时候触发
     handleSizeChange(val) {
       this.pageSize = val;
+      this.getcmtList()
     },
     // 页数切换的时候触发
     handleCurrentChange(val) {
       this.pageIndex = val;
+      this.getcmtList()
+    },
+    getcmtList(){
+      this.cmtList = this.commentList.slice(
+        (this.pageIndex - 1) * this.pageSize,
+        this.pageIndex * this.pageSize
+      );
     },
     //回复
     handleReply(){
@@ -209,7 +219,8 @@ export default {
       this.data = res.data;
       const { total, ...data } = res.data;
       this.commentList = data.data;
-      console.log(this.commentList, 456789);
+      this.cmtList = this.commentList.slice(0,2)
+      // console.log(this.commentList, 456789);
       const arr1 = [];
       //循环
       const arr = this.commentList.map(e => {
@@ -258,8 +269,9 @@ export default {
       margin-top: 40px;
       .cmt-item {
         padding: 20px 20px 5px 20px;
-        &:first-child {
-          border-bottom: 1px dashed #ddd;
+        border-bottom: 1px dashed #ddd;
+        &:last-child {
+          border-bottom: none;
         }
         .cmt-info {
           color: #666;
