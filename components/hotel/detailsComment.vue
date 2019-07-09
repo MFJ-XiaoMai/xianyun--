@@ -2,11 +2,11 @@
   <div class="detailsComment">
     <div>
       <el-row type="flex" justify="center" class="commentIcon">
-        <div class="ctrl-item">
+        <div class="ctrl-item" @click="handleComment">
           <i class="iconfont iconpinglun"></i>
           <p>
-            评论(
-            <span>100</span>)
+            评论
+            <span>({{data.total}})</span>
           </p>
         </div>
         <div class="ctrl-item">
@@ -17,44 +17,50 @@
           <i class="iconfont iconfenxiang"></i>
           <p>分享</p>
         </div>
-        <div class="ctrl-item">
+        <div class="ctrl-item" @click="handleLike">
           <i class="iconfont iconding"></i>
           <p>
-            点赞(
-            <span>8</span>)
+            点赞
+            <span>({{this.like}})</span>
           </p>
         </div>
       </el-row>
       <div class="cot_wrapper">
-        <h4>评论</h4>
-        <textarea
-          autocomplete="off"
-          placeholder="说点什么吧..."
-          class="el-textarea__inner"
-          style="resize: none; min-height: 33px;"
-        ></textarea>
-        <!-- 上传图片 -->
-        <el-row class="uploadPictures" type="flex" justify="space-between">
-          <div>
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
-            >
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt />
-            </el-dialog>
-          </div>
-          <div>
-            <el-button type="primary">提交</el-button>
-          </div>
-        </el-row>
-        <!-- 回复评论 -->
+        <h4 class="h4">评论</h4>
+        <div ref="cmtContent" :model="cmtContent">
+          <textarea
+            ref="txtare"
+            v-model="cmtContent.content"
+            autocomplete="off"
+            placeholder="说点什么吧..."
+            class="el-textarea__inner"
+            style="resize: none; min-height: 33px;"
+          ></textarea>
+          <!-- 上传图片 -->
+          <el-row class="uploadPictures" type="flex" justify="space-between">
+            <div>
+              <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+                :on-success="handleCartSuccess"
+              >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt />
+              </el-dialog>
+            </div>
+            <div>
+              <el-button type="primary" @click="handleSubComment">提交</el-button>
+            </div>
+          </el-row>
+        </div>
+
+        <!-- 评论 -->
         <div class="cmt-list">
-          <div class="cmt-item">
+          <div class="cmt-item" v-for="(item,index) in cmtList" :key="index">
             <div class="cmt-info">
               <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
               地球发动机
@@ -63,82 +69,168 @@
             </div>
             <div class="cmt-content">
               <div class="cmt-new">
-                <p class="cmt-message">评论怎么写</p>
-                <div class="cmt-ctrl">
-                  <a href="javascript:;">回复</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="cmt-item">
-            <div class="cmt-info">
-              <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" />
-              地球发动机
-              <i>2019-07-05 5:24</i>
-              <span>1</span>
-            </div>
-            <div class="cmt-content">
-              <div class="cmt-new">
-                <p class="cmt-message">评论怎么写</p>
-                <div class="cmt-ctrl">
+                <p class="cmt-message">{{item.content}}</p>
+                <div class="cmt-ctrl" @click='handleReply'>
                   <a href="javascript:;">回复</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <!-- 分页 -->
-        <div class="paging">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage4"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
-          ></el-pagination>
-        </div>
+        <el-pagination
+          class="paging"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="pageIndex"
+          :page-sizes="[2 ,4 , 6, 8]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
+      data: {
+        total: 0
+      },
+      commentList: [], //评论数组
+      like: 0, //点赞数
+      isLike: false,
+      // 上传相册的数据
       dialogImageUrl: "",
       dialogVisible: false,
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
+      cmtContent: {
+        content: "",
+        score: {
+          location: 0.0,
+          service: 0.0,
+          fancility: 0.0,
+          all: 0.0
+        },
+        pics: [], //多张图片
+        hotel: 0,
+        post: 0,
+        follow: 0
+      },
+      fileList:[] ,
+      //分页的数据
+      pageIndex: 1,
+      pageSize: 2,
+      total: 0,
+      cmtList:[],
+
     };
   },
+
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    // 评论
+    handleComment() {
+      this.$refs.txtare.focus();
     },
+
+    // 点赞事件
+    handleLike() {
+      const { userInfo } = this.$store.state.user;
+      if (!userInfo.token) {
+        this.$router.push({
+          path: "/user/login/",
+          query: {
+            id: this.$route.query.id
+          }
+        });
+      } else {
+        this.isLike = !this.isLike;
+        if (!this.isLike) {
+          this.like++;
+          return;
+        }
+      }
+    },
+    // 多张图片的删除事件
+    handleRemove(file, fileList) {
+      // console.log(file, fileList);
+      const files = fileList.map(v => {
+        return v.respones;
+      });
+      this.cmtContent.pics = files;
+    },
+    // 图片的预览
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    // 上传多张图片成功后的回调函数
+    handleCartSuccess(res, file, fileList) {
+      const files = fileList.map(v => {
+        return v.respones;
+      });
+      this.cmtContent.pics = files;
     },
+    //分页切换条数的时候触发
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getcmtList()
+    },
+    // 页数切换的时候触发
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.pageIndex = val;
+      this.getcmtList()
+    },
+    getcmtList(){
+      this.cmtList = this.commentList.slice(
+        (this.pageIndex - 1) * this.pageSize,
+        this.pageIndex * this.pageSize
+      );
+    },
+    //回复
+    handleReply(){
+      this.$refs.txtare.focus();
+    },
+    //提交评论到后台数据库
+    handleSubComment() {
+      // 提交数据是要先登录，还有跨域申明
+      this.$axios({
+        url: "/comments",
+        method: "POST",
+        data: this.cmtContent,
+        // withCredentials: true,
+        header: {
+          ContentType: 'application / json',
+          Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+        }
+      }).then(res => {
+        console.log(123, res);
+      });
     }
   },
-  mounted(){
+  mounted() {
     this.$axios({
-      url:'hotels/comments',
-      method:'GET',
-    }).then( res=>{
-      console.log(res.data);
-      const {data} = res.data
-    })
+      url: "hotels/comments",
+      method: "GET"
+    }).then(res => {
+      this.total = res.data.total;
+      this.data = res.data;
+      const { total, ...data } = res.data;
+      this.commentList = data.data;
+      this.cmtList = this.commentList.slice(0,2)
+      // console.log(this.commentList, 456789);
+      const arr1 = [];
+      //循环
+      const arr = this.commentList.map(e => {
+        if (e) {
+          arr1.push(e.like);
+          this.like += e.like;
+          return this.like;
+        }
+      });
+    });
   }
 };
 </script>
@@ -177,8 +269,9 @@ export default {
       margin-top: 40px;
       .cmt-item {
         padding: 20px 20px 5px 20px;
-        &:first-child{
-          border-bottom: 1px dashed #ddd;
+        border-bottom: 1px dashed #ddd;
+        &:last-child {
+          border-bottom: none;
         }
         .cmt-info {
           color: #666;
@@ -209,10 +302,10 @@ export default {
               height: 20px;
               line-height: 20px;
               font-size: 12px;
-              text-align: right;  
-              &:hover a{
-                  display: block;
-                }
+              text-align: right;
+              &:hover a {
+                display: block;
+              }
               a {
                 display: none;
                 text-decoration: underline;
@@ -223,7 +316,7 @@ export default {
       }
     }
   }
-  .paging{
+  .paging {
     margin-top: 10px;
   }
 }

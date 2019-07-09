@@ -3,17 +3,16 @@
     <div class="main">
       <!-- 酒店详情页里的detailsHotel组件 -->
       <div>
-        <DetailsHotel :data='data'/>
+        <DetailsHotel :data="data" />
       </div>
       <!-- 酒店详情页里的detailsMap组件 -->
       <div>
-        <DetailsMap />
+        <DetailsMap :data="data" />
       </div>
       <!-- 酒店详情页里的detailsComment组件 -->
       <div>
         <DetailsComment />
       </div>
-
     </div>
   </div>
 </template>
@@ -25,10 +24,13 @@ import DetailsMap from "@/components/hotel/detailsMap.vue";
 import DetailsComment from "@/components/hotel/detailsComment.vue";
 
 export default {
-  data(){
-    return{
-      data:[],
-    }
+  data() {
+    return {
+      // hotelInfo:[]
+      data: {
+        location:{}
+      }
+    };
   },
 
   // 注册组件
@@ -37,22 +39,23 @@ export default {
     DetailsMap,
     DetailsComment
   },
-  mounted(){
+  methods: {
+
+  },
+  mounted() {
+    // 请求酒店详情页的数据
+    const id = this.$route.query.id;
     this.$axios({
       url: "/hotels",
-      method: "GET"
-      // data:{
-      //   id:this.$route.query.id,
-      // }
+      method: "GET",
+      params: {
+        id
+      }
     }).then(res => {
       // console.log(res);
-      const { data } = res.data;
-      const id = this.$route.query.id;
+      this.data = res.data.data[0];
+      // console.log(this.data);
 
-      const arr = data.filter(v => (v.id = id));
-      // console.log('1111',arr);
-      this.data = data;
-      console.log(this.data)
     });
   }
 };

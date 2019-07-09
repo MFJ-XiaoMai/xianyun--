@@ -100,7 +100,9 @@ export default {
                   city:74
               }
        }).then(res=>{
-           this.data=res.data.data
+            this.data=res.data.data
+            this.scenic=this.data[0]
+            this.getdatalist()
        })
     }
 }

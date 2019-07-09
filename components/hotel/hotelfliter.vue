@@ -11,7 +11,7 @@
                     <span>0-{{price}}</span>
                 </el-row>
                 <div>
-                    <el-slider v-model="price" max="4000"></el-slider>
+                    <el-slider v-model="price" :max="4000"></el-slider>
                 </div> 
             </el-col>
            
