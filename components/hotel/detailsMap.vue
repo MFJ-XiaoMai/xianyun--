@@ -8,55 +8,14 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="风景" name="first">
             <ul>
-              <li class="poi-list-item">
-                <span class="name">夫子庙</span>
+              <li class="poi-list-item" v-for="(item,index) in data.scenic" :key="index">
+                <span class="name">{{item.name}}</span>
                 <span class="distance">32.11公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">总统府</span>
-                <span class="distance">34.23公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">杨柳村明清古建筑群</span>
-                <span class="distance">11.44公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">方山风景区</span>
-                <span class="distance">16.20公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">中华门</span>
-                <span class="distance">31.57公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">老门东</span>
-                <span class="distance">31.23公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">秦淮河</span>
-                <span class="distance">32.01公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">石塘竹海景区</span>
-                <span class="distance">19.83公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">钟山风景区梅花山</span>
-                <span class="distance">33.81公里</span>
-              </li>
-              <li class="poi-list-item">
-                <span class="name">中山陵</span>
-                <span class="distance">33.88公里</span>
               </li>
             </ul>
           </el-tab-pane>
           <el-tab-pane label="交通" name="second">
-            <ul>
-              <li class="poi-list-item" v-for="(item,index) in data.scenic" :key="index">
-                <span class="name">{{item.name}}</span>
-                <!-- <span class="distance">32.11公里</span> -->
-              </li>
-            </ul>
+            交通
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -87,7 +46,6 @@
           <span>主要设施</span>
         </el-col>
         <el-col :span="20" class="messageRight service">
-          <!-- v-for="(item,index) in $store.state.hotel.hotelInfo" -->
           <span v-for="(item,index) in data.hotelassets" :key="index">{{item.name}}</span>
         </el-col>
       </el-row>

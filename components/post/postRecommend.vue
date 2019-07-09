@@ -1,9 +1,14 @@
 <template>
   <el-row class="Travel_strategy_recommended">
-    <h5>推荐攻略</h5>
+    <el-row type="flex" justify="space-between">
+       <h5>推荐攻略</h5>
+       <el-button type="primary" @click="handleyoiuji">写游记</el-button>
+    </el-row>
+   
+
     <el-row class="Published_strategy" v-for="(item,index) in postList" :key="index">
       <ul>
-        <li>
+        <li @click="handletiaozuan(item.id)">
           <el-row class="Published_strategy_header" type="flex" justify="space-between">
             <el-row class="come_from">
               <i class="el-icon-position"></i>
@@ -21,7 +26,7 @@
             </el-row>
           </el-row>
           <el-row class="Spend_Holidays">
-            <i>{{item.title}}</i>
+            <i @click="handletiaozuan(item.id)">{{item.title}}</i>
             <p>{{item.summary}}</p>
           </el-row>
           <el-row class="Holidays_pic">
@@ -57,6 +62,20 @@ export default {
     };
   },
   methods: {
+    handletiaozuan(id){
+      console.log(id)
+        this.$router.push({
+          path:"/post/detail",
+          query:{
+            id:id
+          }
+        })
+    },
+    handleyoiuji(){
+       this.$router.push({
+          path:"/post/create",
+        })
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
@@ -79,7 +98,7 @@ export default {
       url: "/posts"
     }).then(res => {
       if (res.status == 200) {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         const { data, total } = res.data;
         this.postData = data;
         this.total = total;
