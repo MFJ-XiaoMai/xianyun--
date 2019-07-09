@@ -1,6 +1,10 @@
 <template>
   <el-row class="Travel_strategy_recommended">
-    <h5>推荐攻略</h5>
+    <el-row type="flex" justify="space-between" class="writePost">
+      <h5>推荐攻略</h5>
+      <el-button type="primary" @click="handleToCreate">写攻略</el-button>
+    </el-row>
+
     <el-row class="Published_strategy" v-for="(item,index) in postList" :key="index">
       <ul>
         <li>
@@ -57,6 +61,9 @@ export default {
     };
   },
   methods: {
+    handleToCreate(){
+      this.$router.push("/post/create");
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
@@ -93,6 +100,9 @@ export default {
 <style lang="less" scoped>
 .Travel_strategy_recommended {
   margin-left: 90px;
+  .writePost{
+    align-items: center;
+  }
   h5 {
     font-size: 18px;
     color: #333;
@@ -100,6 +110,11 @@ export default {
     line-height: 48px;
     font-weight: normal;
   }
+  .el-button{
+    width: 100px;
+    height: 40px;
+  }
+  
   .Published_strategy {
     box-sizing: border-box;
     border-top: 1px solid #eee;
